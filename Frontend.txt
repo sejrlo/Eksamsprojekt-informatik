@@ -1,0 +1,1 @@
+En klient med en startskærm og et søge felt. Når man søger finder den relavente videoer på serverne og viser dem der 

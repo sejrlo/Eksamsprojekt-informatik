@@ -1,0 +1,2 @@
+Klient skal have mulighed for at sende en request til serverne ud fra en server liste. 
+Derefter skal serverne have mulighed for at sende det relavente data tilbage.

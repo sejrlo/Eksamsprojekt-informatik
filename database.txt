@@ -1,0 +1,14 @@
+
+#formen for tabelskitsen er: 
+Tabelnavn(~NøgleAttribut[DataType]~, Attribut2[DataType],...,AttributN[DataType] )
+
+#Datatyper:
+ASCII: En streng hvor der kun må anvendes ASCII tegn
+int: Et helt tal, kort for "integer"
+Unicode: En streng hvor alle Unicode tegn må bruges
+Hash: En ulæselig mængde bits, der så kan bruges til at sammenligne med brugerens password
+Timestamp: Et 64-bit tal, der beskriver hvor langt tid der er gået siden 1. Januar 1970 - kan bruges til at beskrive en bestemt dato, og hvornår på den dag noget skete
+
+Bruger(~BrugerID[ASCII]~, BrugerNavn[Unicode], Beskrivelse[Unicode], PasswordHash[Hash], OprettelsesDato[Timestamp], EmailAddress[ASCII], ServerRegistered[ASCII])
+Medie(~MedieID[ASCII]~, MedieNavn[Unicode], Beskrivelse[Unicode], OprettelsesDato[Timestamp])
+Tags(~MedieID[ASCII], Content[Unicode]~)

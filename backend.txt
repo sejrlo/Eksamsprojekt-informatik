@@ -1,0 +1,6 @@
+Backenden er den der skal hente data fra dens database, den skal filtrere og sende dataen til klienten
+
+Backenden skal bruge klientens request til at søge dens database efter relavent indhold, 
+hvorefter den sender det tilbage til klienten.
+Backenden skal også have en liste over forskellige server som klienten kan 
+
