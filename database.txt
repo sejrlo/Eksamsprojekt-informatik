@@ -1,6 +1,3 @@
-
-git test uwu
-
 #formen for tabelskitsen er: 
 Tabelnavn(~NøgleAttribut[DataType]~, Attribut2[DataType],...,AttributN[DataType] )
 
