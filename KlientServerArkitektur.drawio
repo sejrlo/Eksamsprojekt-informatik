@@ -1,0 +1,48 @@
+<mxfile host="Electron" modified="2024-04-04T10:26:43.428Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/23.1.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="EGUBfIt_7iD0D8dWt1pS" version="23.1.5" type="device">
+  <diagram name="Page-1" id="SvD5SHL6qBnQfRaY49sX">
+    <mxGraphModel dx="819" dy="492" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0xDGPhx3X3nH7Ochr7c6-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460" y="1030" />
+              <mxPoint x="570" y="1030" />
+              <mxPoint x="570" y="390" />
+              <mxPoint x="460" y="390" />
+            </Array>
+            <mxPoint x="460" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HeuBBQdr4y3C9zgCAsA6-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="350" as="sourcePoint" />
+            <mxPoint x="480" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HeuBBQdr4y3C9zgCAsA6-2" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.management_console;fillColor=#D2D3D3;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="290" y="327" width="63" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="HeuBBQdr4y3C9zgCAsA6-4" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.traditional_server;fillColor=#7D7C7C;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="490" y="327" width="46.5" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="HeuBBQdr4y3C9zgCAsA6-5" value="" style="outlineConnect=0;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;html=1;shape=mxgraph.aws3.generic_database;fillColor=#7D7C7C;gradientColor=none;" vertex="1" parent="1">
+          <mxGeometry x="670" y="320" width="49.5" height="64.5" as="geometry" />
+        </mxCell>
+        <mxCell id="HeuBBQdr4y3C9zgCAsA6-7" value="Klient" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="296.5" y="408" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HeuBBQdr4y3C9zgCAsA6-8" value="Server" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="483.25" y="408" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HeuBBQdr4y3C9zgCAsA6-9" value="Database" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="659.75" y="408" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HeuBBQdr4y3C9zgCAsA6-10" value="Søg efter en video:" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="261.5" y="268" width="120" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
