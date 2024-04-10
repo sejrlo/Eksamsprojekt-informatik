@@ -10,4 +10,5 @@ Timestamp: Et 64-bit tal, der beskriver hvor langt tid der er gået siden 1. Jan
 
 Bruger(~BrugerID[ASCII]~, BrugerNavn[Unicode], Beskrivelse[Unicode], PasswordHash[Hash], OprettelsesDato[Timestamp], EmailAddress[ASCII], ServerRegistered[ASCII])
 Medie(~MedieID[ASCII]~, MedieNavn[Unicode], Beskrivelse[Unicode], OprettelsesDato[Timestamp])
-Tags(~MedieID[ASCII], Content[Unicode]~)
+Tag(~TagID[ASCII]~, Content[Unicode])
+TagRelation(~TagID[ASCII], MedieID[ASCII]~)
