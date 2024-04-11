@@ -37,7 +37,7 @@ class DatabaseManager:
                                 Description VARCHAR(500),
                                 PasswordHash VARCHAR(256) NOT NULL,
                                 CreationDate INT NOT NULL,
-                                EmailAdress VARCHAR(256) NOT NULL,
+                                EmailAddress VARCHAR(256) NOT NULL,
                                 Server VARCHAR(128) NOT NULL,
                                 PRIMARY KEY (Id)
                             ) ENGINE = InnoDB
@@ -67,5 +67,7 @@ class DatabaseManager:
                                     PRIMARY KEY (MediaId, TagId)
                                 ) ENGINE = InnoDB
 """)
+    def create_user(self, username, password, email):
+        pass
 
 DatabaseManager("media_platform_database")
