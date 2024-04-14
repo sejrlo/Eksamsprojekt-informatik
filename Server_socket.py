@@ -1,10 +1,14 @@
 import socket
 import threading 
 import json
+import Server
+from Server import *
 
+
+requests = {"Register":create_user, "Login": login}
 
 class Connection:
-    def __init__(self):
+    def __init__(self, requests):
         self.HEADER = 64
         self.PORT = 5050
         self.SERVER = "0.0.0.0"
@@ -17,7 +21,7 @@ class Connection:
         self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR,1) 
         self.server.bind(self.ADDR)
 
-        self.requests = {}
+        self.requests = requests
 
     def send_message(self, conn, data):
         message = json.dumps(data).encode(self.FORMAT)
@@ -46,7 +50,7 @@ class Connection:
             if msg == self.DISCONNECT_MSG: break
             print(f"[{addr}] {msg}")
             data = json.loads(msg)
-            self.requests[data["request"]](data, conn)
+            self.requests[data["request"]](data, conn, self.send_message)
 
         conn.close()
 
@@ -62,3 +66,6 @@ class Connection:
                 print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
         except KeyboardInterrupt: 
             pass
+
+conn = Connection(requests)
+conn.start()

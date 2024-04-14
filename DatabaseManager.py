@@ -3,7 +3,6 @@
 import mysql.connector
 import sys
 from mysql.connector import Error
-import Table
 
 
 class DatabaseManager:
@@ -20,7 +19,7 @@ class DatabaseManager:
         #     self.connect_controller()
         #     self.mycursor.execute(f"CREATE DATABASE {self.db_name}")
         #     self.connect_controller(self.db_name)
-
+        self.create_database()
         self.initial_table_setup()
     
     def create_database(self):
@@ -103,13 +102,13 @@ class DatabaseManager:
                                 DisplayName VARCHAR(32) NOT NULL,
                                 Description VARCHAR(500),
                                 PasswordHash VARCHAR(256) NOT NULL,
-                                CreationDate INT NOT NULL,
+                                CreationDate BIGINT UNSIGNED NOT NULL,
                                 EmailAddress VARCHAR(256) NOT NULL,
                                 Server VARCHAR(128) NOT NULL,
                                 PRIMARY KEY (Id)
                             ) ENGINE = InnoDB
 """)
-        #Medie(~MedieID[ASCII]~, MedieNavn[Unicode], Beskrivelse[Unicode], OprettelsesDato[Timestamp])
+        
         self.execute_query("""
                             CREATE TABLE IF NOT EXISTS media(
                                 Id INT NOT NULL,
@@ -119,6 +118,7 @@ class DatabaseManager:
                                 PRIMARY KEY (Id)
                             ) ENGINE = InnoDB
 """)      #Tags(~ID[ASCII], Content[Unicode]~)
+        
         self.execute_query("""
                                 CREATE TABLE IF NOT EXISTS tag(
                                     Id INT NOT NULL,
@@ -126,7 +126,7 @@ class DatabaseManager:
                                     PRIMARY KEY (Id)
                                 ) ENGINE = InnoDB
 """) 
-        #TagRelation(~TagID[ASCII], MedieID[ASCII]~)
+        
         self.execute_query("""
                                 CREATE TABLE IF NOT EXISTS tagrelation(
                                     MediaId INT NOT NULL,
@@ -134,7 +134,8 @@ class DatabaseManager:
                                     PRIMARY KEY (MediaId, TagId)
                                 ) ENGINE = InnoDB
 """)
-        if not Table.get("Ids", {"id":1}):
+
+        if not self.execute_read_query("SELECT * FROM ids WHERE id = 1"):
             self.execute_query("INSERT INTO Ids () VALUES ()")
 
 manager = DatabaseManager("media_platform_database")
