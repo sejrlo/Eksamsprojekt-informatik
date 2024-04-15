@@ -1,55 +1,86 @@
 import tkinter as tk
 from tkinter import ttk
-from Client_socket import Connection
 
-connection = Connection()
-    
-class Search_menu():
-    def __init__(self):
-        self.window = tk.Tk()
-        self.create_layout()
-        self.running = True
-        self.mainloop()
-      
-    def create_layout(self):
-        # Opret hovedvinduet
-        self.window.title("Søgefelt Eksempel")
-        self.window.geometry("400x200+100+100")
+class LoginFrame(tk.Frame):
+    def __init__(self, master, on_success):
+        super().__init__(master)
+        self.on_success = on_success
+        self.create_widgets()
 
-        # Opret en ramme til at holde widgets
-        frame = ttk.Frame(self.window, padding="10")
-        frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
-
-        # Opret et etiket (label) widget
-        label = ttk.Label(frame, text="Indtast din søgeforespørgsel:")
-        label.grid(row=0, column=0, sticky=tk.W, pady=2)
-
-        # Opret et tekstindtastningsfelt (entry) widget
-        self.search_entry = ttk.Entry(frame, width=50)  # Changed to an instance attribute
-        self.search_entry.grid(row=1, column=0, sticky=(tk.W, tk.E), pady=2)
-        self.search_entry.focus()
-
-        # Opret en knap widget til at initiere søgning
-        search_button = ttk.Button(frame, text="Søg", command=lambda: self.search_action())
-        search_button.grid(row=2, column=0, sticky=tk.W, pady=2)
-
-        # Create a Text widget for search feedback (moved outside the method for reuse)
-        self.search_feedback = tk.Text(self.window, height=10, width=50)
-        self.search_feedback.grid(row=2, column=1, sticky=tk.W, pady=2)
-
-    """ Events """
-    def search_action(self):
-        search_query = self.search_entry.get()  # Hent tekst fra søgefeltet direkte
-        print(search_query)
+    def create_widgets(self):
+        tk.Label(self, text="Username:").grid(row=0, column=0)
+        self.username_entry = tk.Entry(self)
+        self.username_entry.grid(row=0, column=1)
+        self.username_entry.focus()  # Focus on username initially
         
-        # Clear the Text widget before inserting new text
-        self.search_feedback.delete("1.0", tk.END)
-        self.search_feedback.insert("1.0", "Searching for: " + search_query)
+        tk.Label(self, text="Password:").grid(row=1, column=0)
+        self.password_entry = tk.Entry(self, show="*")
+        self.password_entry.grid(row=1, column=1)
 
-    def mainloop(self):
-        # Kør hovedbegivenhedsløkkenˆ
-        print("running")
-        if self.running:
-            self.window.mainloop()
+        login_button = tk.Button(self, text="Login", command=self.attempt_login)
+        login_button.grid(row=2, column=1)
+        
+        self.feedback_label = tk.Label(self, text="")
+        self.feedback_label.grid(row=3, column=0, columnspan=2)
 
-search_menu = Search_menu()
+    def attempt_login(self):
+        username = self.username_entry.get()
+        password = self.password_entry.get()
+        if self.verify_credentials(username, password):
+            self.on_success()  # Switch to the search frame if login is successful
+        else:
+            self.feedback_label.config(text="Invalid credentials, try again.")
+
+    def verify_credentials(self, username, password):
+        return username == "admin" and password == "password"  # Example check
+
+class Search_menu(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("Søgefelt Eksempel")
+        self.geometry("400x400+100+100")
+        self.setup_frames()
+        self.mainloop()
+
+    def setup_frames(self):
+        self.search_frame = tk.Frame(self)
+        self.create_search_widgets()
+        self.login_frame = LoginFrame(self, self.switch_to_search)
+        self.login_frame.grid(row=0, column=0, sticky="nsew")
+        self.search_frame.grid(row=0, column=0, sticky="nsew")
+        self.search_frame.grid_remove()
+
+    def create_search_widgets(self):
+        instruction = tk.Label(self.search_frame, text="Indtast din søgeforespørgsel:")
+        instruction.grid(row=0, column=0, columnspan=2)
+        
+        self.search_entry = tk.Entry(self.search_frame)
+        self.search_entry.grid(row=1, column=0, columnspan=2, sticky="ew")
+        
+        search_button = tk.Button(self.search_frame, text="Søg", width=10, command=self.search_action)
+        search_button.grid(row=2, column=0, sticky="w")
+        
+        self.search_feedback = tk.Label(self.search_frame, text="")
+        self.search_feedback.grid(row=2, column=1)
+
+        logout_button = tk.Button(self.search_frame, text="Logout", command=self.switch_to_login)
+        logout_button.grid(row=3, column=0, sticky="ew", columnspan=2)
+
+    def switch_to_search(self):
+        self.login_frame.grid_remove()
+        self.search_frame.grid()
+        self.search_entry.focus()  # Focus on search entry after logging in
+        self.update_idletasks()  # Refresh GUI to ensure visibility
+
+    def switch_to_login(self):
+        self.search_frame.grid_remove()
+        self.login_frame.grid()
+        self.login_frame.username_entry.focus()  # Focus back to username entry on logout
+        self.update_idletasks()  # Refresh GUI to ensure visibility
+
+    def search_action(self):
+        search_query = self.search_entry.get()
+        self.search_feedback.config(text=f"Searching for {search_query}")
+        print(search_query)
+
+app = Search_menu()
