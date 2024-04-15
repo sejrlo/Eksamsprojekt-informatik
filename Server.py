@@ -1,38 +1,41 @@
 import DatabaseManager as dm
 import Table
 import time
+import bcrypt
 
 server_id = "12345"
 
-def register(username, password, email):
+def register(data, conn, call_back):
+    user = Table.get("user", {"username":data["username"]})
+    if user != None: call_back(conn, {"request":data["request"], "status":"username taken"})
+    salt = bcrypt.gensalt()
+    print(salt)
     user = Table.Table("user", {
-        "Username":username, 
-        "DisplayName":username,
-        "PasswordHash":password, 
-        "CreationDate":round(time.time()*1000),
-        "EmailAddress":email, 
-        "Server":server_id
+        "username":data["username"], 
+        "displayname":data["username"],
+        "passwordhash":bcrypt.hashpw(str.encode(data["password"]), salt), 
+        "creationdate":round(time.time()*1000),
+        "salt":salt,
+        "emailaddress":data["email"] 
         })
+    if user != None:
+        call_back(conn, {"request":data["request"], "status":"success", "user":
+                            {"id":user.get("id"), "username":user.get("username"), "displayname":user.get("displayname"), 
+                            "creationdate":user.get("creationdate"), "email":user.get("emailaddress"), "server":server_id}
+                            })
 
 
 
 def login(data, conn, call_back):
-    user = Table.get("user", {"username":data["username"], "passwordHash":data["password"]})
-    if user != None:
-        new_data = {"request":data["request"], "status":"success", "user":user}
-        call_back(new_data, conn)
+    user = Table.get("user", {"username":data["username"]})
+    if user.get("passwordhash") == bcrypt.hashpw(str.encode(data["password"]), user.get("salt")):
+        new_data = {"request":data["request"], "status":"success", "user":user.data}
+        call_back(conn, new_data)
     
     else:
         new_data = {"request":data["request"], "status":"Username or password incorrect"}
-        call_back(new_data, conn)
+        call_back(conn, new_data)
 
-print("username:")
-username = input("")
 
-print("password:")
-password = input("")
-
-print("email:")
-email = input("")
-
-register(username, password, email)
+def search(data, conn, call_back):
+    call_back({"request":data["request"], "status":"success"}, conn)

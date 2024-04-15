@@ -4,16 +4,16 @@ import json
 from Server import *
 
 
-requests = {"Register":register, "Login":login}
+requests = {"Register":register, "Login":login, "Search":search}
 
 class Connection:
-    def __init__(self, requests):
-        self.HEADER = 64
-        self.PORT = 5050
-        self.SERVER = "0.0.0.0"
+    def __init__(self, requests, header=64, port=5050, server="0.0.0.0", format='utf-8', disconnect_msg="!DISCONNECT"):
+        self.HEADER = header
+        self.PORT = port
+        self.SERVER = server
         self.ADDR = (self.SERVER, self.PORT)
-        self.FORMAT = 'ascii'
-        self.DISCONNECT_MSG = "!DISCONNECT"
+        self.FORMAT = format
+        self.DISCONNECT_MSG = disconnect_msg
 
 
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -48,7 +48,9 @@ class Connection:
             if msg == "": continue
             if msg == self.DISCONNECT_MSG: break
             print(f"[{addr}] {msg}")
+            print(msg)
             data = json.loads(msg)
+            print(data, type(data))
             self.requests[data["request"]](data, conn, self.send_message)
 
         conn.close()
@@ -62,7 +64,7 @@ class Connection:
                 thread = threading.Thread(target=self.handle_client, args=(conn, addr))
                 thread.daemon = True
                 thread.start()
-                print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
+                print(f"[ACTIVE CONNECTIONS] {threading.active_count() - 1}")
         except KeyboardInterrupt: 
             pass
 
