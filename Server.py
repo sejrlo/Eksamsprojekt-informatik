@@ -4,7 +4,7 @@ import time
 
 server_id = "12345"
 
-def create_user(username, password, email):
+def register(username, password, email):
     user = Table.Table("user", {
         "Username":username, 
         "DisplayName":username,
@@ -17,7 +17,7 @@ def create_user(username, password, email):
 
 
 def login(data, conn, call_back):
-    user = Table.Table("user", {"username":data["username"], "passwordHash":data["password"]})
+    user = Table.get("user", {"username":data["username"], "passwordHash":data["password"]})
     if user != None:
         new_data = {"request":data["request"], "status":"success", "user":user}
         call_back(new_data, conn)
@@ -35,4 +35,4 @@ password = input("")
 print("email:")
 email = input("")
 
-create_user(username, password, email)
+register(username, password, email)

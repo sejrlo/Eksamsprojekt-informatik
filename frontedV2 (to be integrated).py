@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import ttk
+from Client_socket import Connection
 
+connection = Connection()
+    
 class Search_menu():
     def __init__(self):
         self.window = tk.Tk()

@@ -1,11 +1,10 @@
 import socket
 import threading 
 import json
-import Server
 from Server import *
 
 
-requests = {"Register":create_user, "Login": login}
+requests = {"Register":register, "Login":login}
 
 class Connection:
     def __init__(self, requests):
@@ -67,5 +66,5 @@ class Connection:
         except KeyboardInterrupt: 
             pass
 
-conn = Connection(requests)
-conn.start()
+connection = Connection(requests)
+connection.start()

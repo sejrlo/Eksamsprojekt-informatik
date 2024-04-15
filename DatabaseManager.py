@@ -87,9 +87,9 @@ class DatabaseManager:
         self.execute_query("""
         CREATE TABLE IF NOT EXISTS Ids (
             id INT NOT NULL AUTO_INCREMENT,
-            user_next_id INT NOT NULL DEFAULT 1,
-            media_next_id INT NOT NULL DEFAULT 1,
-            tag_next_id INT NOT NULL DEFAULT 1,
+            user_next_id BIGINT UNSIGNED NOT NULL DEFAULT 1,
+            media_next_id BIGINT UNSIGNED NOT NULL DEFAULT 1,
+            tag_next_id BIGINT UNSIGNED NOT NULL DEFAULT 1,
             PRIMARY KEY (id)
         ) ENGINE = InnoDB
         
@@ -97,7 +97,7 @@ class DatabaseManager:
 
         self.execute_query("""
                             CREATE TABLE IF NOT EXISTS user(
-                                Id INT NOT NULL,
+                                Id BIGINT UNSIGNED NOT NULL,
                                 Username VARCHAR(32) NOT NULL,
                                 DisplayName VARCHAR(32) NOT NULL,
                                 Description VARCHAR(500),
@@ -111,7 +111,7 @@ class DatabaseManager:
         
         self.execute_query("""
                             CREATE TABLE IF NOT EXISTS media(
-                                Id INT NOT NULL,
+                                Id BIGINT UNSIGNED NOT NULL,
                                 MediaName VARCHAR(32) NOT NULL,
                                 Description VARCHAR(500),
                                 CreationDate INT NOT NULL,
@@ -121,7 +121,7 @@ class DatabaseManager:
         
         self.execute_query("""
                                 CREATE TABLE IF NOT EXISTS tag(
-                                    Id INT NOT NULL,
+                                    Id BIGINT UNSIGNED NOT NULL,
                                     Content VARCHAR(128),
                                     PRIMARY KEY (Id)
                                 ) ENGINE = InnoDB
