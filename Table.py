@@ -92,9 +92,9 @@ SELECT
 FROM
     INFORMATION_SCHEMA.COLUMNS
 WHERE
-  TABLE_SCHEMA = '{db_name}' 
-  AND TABLE_NAME = '{tablename}'
-  AND COLUMN_NAME = '{column_name}';
+    TABLE_SCHEMA = '{db_name}' 
+    AND TABLE_NAME = '{tablename}'
+    AND COLUMN_NAME = '{column_name}';
     """
     res = dm.manager.execute_read_query(cmd)
     res = res[0][0]
@@ -185,4 +185,4 @@ class Table:
             formatted += " | "
         formatted = formatted[:-2]
         return formatted
-    
+

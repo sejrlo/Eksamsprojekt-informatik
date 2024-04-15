@@ -4,13 +4,13 @@ import json
 ip = "127.0.0.1"
 
 class Connection:
-    def __init__(self):
-        self.SERVER = ip
-        self.PORT = 5050
+    def __init__(self, server = ip, port = 5050, header = 64, format = 'utf-8', disconnect = "!DISCONNECT"):
+        self.SERVER = server
+        self.PORT = port
         self.ADDR = (self.SERVER, self.PORT)
-        self.HEADER = 64
-        self.FORMAT = 'ascii'
-        self.DISCONNECT_MSG = "!DISCONNECT"
+        self.HEADER = header
+        self.FORMAT = format
+        self.DISCONNECT_MSG = disconnect
         
         
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

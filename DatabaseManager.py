@@ -102,9 +102,9 @@ class DatabaseManager:
                                 DisplayName VARCHAR(32) NOT NULL,
                                 Description VARCHAR(500),
                                 PasswordHash VARCHAR(256) NOT NULL,
+                                Salt VARCHAR(128) NOT NULL,
                                 CreationDate BIGINT UNSIGNED NOT NULL,
                                 EmailAddress VARCHAR(256) NOT NULL,
-                                Server VARCHAR(128) NOT NULL,
                                 PRIMARY KEY (Id)
                             ) ENGINE = InnoDB
 """)
