@@ -4,7 +4,7 @@ import json
 from Server import *
 
 
-requests = {"Register":register, "Login":login, "Search":search}
+requests = {"Register":register, "Login":login, "create_media":create_media, "get_media":get_media, "del_media":del_media, "Search":search}
 
 class Connection:
     def __init__(self, requests, header=64, port=5050, server="0.0.0.0", format='utf-8', disconnect_msg="!DISCONNECT"):
@@ -43,6 +43,9 @@ class Connection:
 
     def handle_client(self, conn, addr):
         print(f"[NEW CONNECTION] {addr} connected.")
+
+        connection_context = {"userID":-1}
+        
         while True:
             msg = self.receive_message(conn)
             if msg == "": continue
@@ -51,7 +54,11 @@ class Connection:
             print(msg)
             data = json.loads(msg)
             print(data, type(data))
-            self.requests[data["request"]](data, conn, self.send_message)
+            new_data, response = self.requests[data["request"]](data, connection_context)
+            if response["request"] == "login" or response["request"] == "login":
+                if response["status"] == "success": connection_context["userID"] = new_data["userID"]
+            
+            self.send_message(conn, response)
 
         conn.close()
 

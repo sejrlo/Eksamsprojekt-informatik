@@ -9,6 +9,6 @@ Hash: En ulæselig mængde bits, der så kan bruges til at sammenligne med bruge
 Timestamp: Et 64-bit tal, der beskriver hvor langt tid der er gået siden 1. Januar 1970 - kan bruges til at beskrive en bestemt dato, og hvornår på den dag noget skete
 
 Bruger(~BrugerID[ASCII]~, BrugerNavn[Unicode], Beskrivelse[Unicode], PasswordHash[Hash], OprettelsesDato[Timestamp], EmailAddress[ASCII], ServerRegistered[ASCII])
-Medie(~MedieID[ASCII]~, MedieNavn[Unicode], Beskrivelse[Unicode], OprettelsesDato[Timestamp])
+Medie(~MedieID[ASCII]~, MedieNavn[Unicode], Beskrivelse[Unicode], OprettelsesDato[Timestamp], Data[Bytes], DataType[ASCII])
 Tag(~TagID[ASCII]~, Content[Unicode])
 TagRelation(~TagID[ASCII], MedieID[ASCII]~)

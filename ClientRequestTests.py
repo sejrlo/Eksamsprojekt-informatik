@@ -2,6 +2,7 @@ from Client_socket import Connection
 import json
 
 username = "test_user"
+username = 33*"u"+"dmkmngksdg"
 password = "test_password"
 email = "test@test.test"
 

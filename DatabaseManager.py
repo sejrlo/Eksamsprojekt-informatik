@@ -98,10 +98,10 @@ class DatabaseManager:
         self.execute_query("""
                             CREATE TABLE IF NOT EXISTS user(
                                 Id BIGINT UNSIGNED NOT NULL,
-                                Username VARCHAR(32) NOT NULL,
-                                DisplayName VARCHAR(32) NOT NULL,
+                                Username VARCHAR(64) NOT NULL,
+                                DisplayName VARCHAR(64) NOT NULL,
                                 Description VARCHAR(500),
-                                PasswordHash VARCHAR(256) NOT NULL,
+                                PasswordHash VARCHAR(60) NOT NULL,
                                 Salt VARCHAR(128) NOT NULL,
                                 CreationDate BIGINT UNSIGNED NOT NULL,
                                 EmailAddress VARCHAR(256) NOT NULL,
@@ -115,6 +115,8 @@ class DatabaseManager:
                                 MediaName VARCHAR(32) NOT NULL,
                                 Description VARCHAR(500),
                                 CreationDate INT NOT NULL,
+                                Data VARBINARY(10485760) NOT NULL,
+                                DataType VARCHAR(3) NOT NULL,
                                 PRIMARY KEY (Id)
                             ) ENGINE = InnoDB
 """)      #Tags(~ID[ASCII], Content[Unicode]~)
