@@ -3,7 +3,7 @@ from tkinter import ttk
 
 class LoginFrame(tk.Frame):
     def __init__(self, master, on_success):
-        super().__init__(master)
+        super().__init__()
         self.on_success = on_success
         self.create_widgets()
 
@@ -49,27 +49,49 @@ class Search_menu(tk.Tk):
         self.login_frame.grid(row=0, column=0, sticky="nsew")
         self.search_frame.grid(row=0, column=0, sticky="nsew")
         self.search_frame.grid_remove()
+        print(self.search_frame)
 
     def create_search_widgets(self):
-        instruction = tk.Label(self.search_frame, text="Indtast din søgeforespørgsel:")
-        instruction.grid(row=0, column=0, columnspan=2)
         
-        self.search_entry = tk.Entry(self.search_frame)
-        self.search_entry.grid(row=1, column=0, columnspan=2, sticky="ew")
+         self.search_widget = {
+            'instruction': tk.Label(self.search_frame, text="Indtast din søgeforespørgsel:", ),
+            'search_entry': tk.Entry(self.search_frame),
+            'search_button': tk.Button(self.search_frame, text="Søg", width=10, command=self.search_action)
         
-        search_button = tk.Button(self.search_frame, text="Søg", width=10, command=self.search_action)
-        search_button.grid(row=2, column=0, sticky="w")
+        
+            
+        }
+        
+            self.search_widget['instruction'].grid(row=1, column=0, columnspan=2, sticky="ew")
+            
+
+            self.search_button.grid(row=2, column=0, sticky="w")
+            
+            self.search_feedback = tk.Label(self.search_frame, text="")
+            self.search_feedback.grid(row=2, column=1)
+
+            self.logout_button = tk.Button(self.search_frame, text="Logout", command=self.switch_to_login)
+            self.logout_button.grid(row=3, column=0, sticky="ew", columnspan=2)
+
+            self.instruction = tk.Label(self.search_frame, text="Indtast din søgeforespørgsel:", )
+            self.instruction.grid(row=0, column=0, columnspan=2)
+            
+            self.search_widget['instruction'] = tk.Entry(self.search_frame)
+            self.search_widget['instruction'].grid(row=1, column=0, columnspan=2, sticky="ew")
+            
+            self.search_button = tk.Button(self.search_frame, text="Søg", width=10, command=self.search_action)
+            self.search_button.grid(row=2, column=0, sticky="w")
         
         self.search_feedback = tk.Label(self.search_frame, text="")
         self.search_feedback.grid(row=2, column=1)
 
-        logout_button = tk.Button(self.search_frame, text="Logout", command=self.switch_to_login)
-        logout_button.grid(row=3, column=0, sticky="ew", columnspan=2)
+        self.logout_button = tk.Button(self.search_frame, text="Logout", command=self.switch_to_login)
+        self.logout_button.grid(row=3, column=0, sticky="ew", columnspan=2)
 
     def switch_to_search(self):
         self.login_frame.grid_remove()
         self.search_frame.grid()
-        self.search_entry.focus()  # Focus on search entry after logging in
+        self.search_widget['instruction'].focus()  # Focus on search entry after logging in
         self.update_idletasks()  # Refresh 
 
     def switch_to_login(self):
@@ -79,7 +101,7 @@ class Search_menu(tk.Tk):
         self.update_idletasks()  # Refresh GUI to ensure visibility
 
     def search_action(self):
-        search_query = self.search_entry.get()
+        search_query = self.search_widget['instruction'].get()
         self.search_feedback.config(text=f"Searching for {search_query}")
         print(search_query)
 

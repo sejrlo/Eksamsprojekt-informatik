@@ -11,11 +11,10 @@ class App(tk.Tk):
         super().__init__()
         self.title("AppTube")
         self.geometry("400x600")
-
-        # Dictionary to hold the frames
+        
         self.frames = {}
         
-        frame_classes = {'login': LoginFrame, 'register': RegisterFrame, 'search': SearchFrame}
+        frame_classes = {'login': LoginFrame, 'search': SearchFrame} #'register': RegisterFrame,
         for key, FrameClass in frame_classes.items():
             frame = FrameClass(self, self.switch_frame)
             self.frames[key] = frame
@@ -36,10 +35,11 @@ class App(tk.Tk):
 class Frame(tk.Frame):
     def __init__(self):
         super().__init__()
-        self.frame = tk.Frame
+
     
     def hide_frame(self):
-        self.frame.grid_remove()
+        self.grid_remove()
+        
         
         
 class RegisterFrame(Frame):
