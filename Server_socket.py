@@ -50,13 +50,16 @@ class Connection:
             msg = self.receive_message(conn)
             if msg == "": continue
             if msg == self.DISCONNECT_MSG: break
-            print(f"[{addr}] {msg}")
-            print(msg)
+            
             data = json.loads(msg)
-            print(data, type(data))
-            new_data, response = self.requests[data["request"]](data, connection_context)
-            if response["request"] == "Login" or response["request"] == "Register":
-                if response["status"] == "success": connection_context["userid"] = new_data["userid"]
+            print(f"[{addr}] {data['request']}")
+            if data["request"] == "Logout":
+                connection_context["userid"] = -1
+                response = {"request":"Logout", "status":"success"}
+            else:
+                new_data, response = self.requests[data["request"]](data, connection_context)
+                if response["request"] == "Login" or response["request"] == "Register":
+                    if response["status"] == "success": connection_context["userid"] = new_data["userid"]
             
             self.send_message(conn, response)
 

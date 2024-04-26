@@ -1,0 +1,8 @@
+class NameFrame(tk.Frame):
+    def __init__(self, window):
+        super().__init__(window)
+        self.w = {}
+        self.window = window
+    
+    def make_layout(self):
+        
