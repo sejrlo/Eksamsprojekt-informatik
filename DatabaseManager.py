@@ -85,7 +85,7 @@ class DatabaseManager:
     
     def initial_table_setup(self):
         self.execute_query("""
-        CREATE TABLE IF NOT EXISTS Ids (
+        CREATE TABLE IF NOT EXISTS ids (
             id INT NOT NULL AUTO_INCREMENT,
             user_next_id BIGINT UNSIGNED NOT NULL DEFAULT 1,
             media_next_id BIGINT UNSIGNED NOT NULL DEFAULT 1,
@@ -97,47 +97,47 @@ class DatabaseManager:
 
         self.execute_query("""
                             CREATE TABLE IF NOT EXISTS user(
-                                Id BIGINT UNSIGNED NOT NULL,
-                                Username VARCHAR(64) NOT NULL,
-                                DisplayName VARCHAR(64) NOT NULL,
-                                Description VARCHAR(500),
-                                PasswordHash VARCHAR(60) NOT NULL,
-                                Salt VARCHAR(128) NOT NULL,
-                                CreationDate BIGINT UNSIGNED NOT NULL,
-                                EmailAddress VARCHAR(256) NOT NULL,
-                                PRIMARY KEY (Id)
+                                id BIGINT UNSIGNED NOT NULL,
+                                username VARCHAR(64) NOT NULL,
+                                displayname VARCHAR(64) NOT NULL,
+                                description VARCHAR(1024),
+                                passwordhash VARCHAR(512) NOT NULL,
+                                salt VARCHAR(512) NOT NULL,
+                                creationdate BIGINT UNSIGNED NOT NULL,
+                                emailaddress VARCHAR(256) NOT NULL,
+                                PRIMARY KEY (id)
                             ) ENGINE = InnoDB
 """)
         
         self.execute_query("""
                             CREATE TABLE IF NOT EXISTS media(
-                                Id BIGINT UNSIGNED NOT NULL,
-                                MediaName VARCHAR(32) NOT NULL,
-                                Description VARCHAR(500),
-                                CreationDate INT NOT NULL,
-                                Data VARBINARY(10485760) NOT NULL,
-                                DataType VARCHAR(3) NOT NULL,
-                                PRIMARY KEY (Id)
+                                id BIGINT UNSIGNED NOT NULL,
+                                medianame VARCHAR(32) NOT NULL,
+                                description VARCHAR(500),
+                                creationdate INT NOT NULL,
+                                datatype VARCHAR(32) NOT NULL,
+                                ownerid BIGINT UNSIGNED NOT NULL,
+                                PRIMARY KEY (id)
                             ) ENGINE = InnoDB
 """)      #Tags(~ID[ASCII], Content[Unicode]~)
         
         self.execute_query("""
                                 CREATE TABLE IF NOT EXISTS tag(
-                                    Id BIGINT UNSIGNED NOT NULL,
-                                    Content VARCHAR(128),
-                                    PRIMARY KEY (Id)
+                                    id BIGINT UNSIGNED NOT NULL,
+                                    content VARCHAR(128),
+                                    PRIMARY KEY (id)
                                 ) ENGINE = InnoDB
 """) 
         
         self.execute_query("""
                                 CREATE TABLE IF NOT EXISTS tagrelation(
-                                    MediaId INT NOT NULL,
-                                    TagId INT NOT NULL,
-                                    PRIMARY KEY (MediaId, TagId)
+                                    mediaid INT NOT NULL,
+                                    tagid INT NOT NULL,
+                                    PRIMARY KEY (mediaid, tagid)
                                 ) ENGINE = InnoDB
 """)
 
         if not self.execute_read_query("SELECT * FROM ids WHERE id = 1"):
-            self.execute_query("INSERT INTO Ids () VALUES ()")
+            self.execute_query("INSERT INTO ids () VALUES ()")
 
 manager = DatabaseManager("media_platform_database")

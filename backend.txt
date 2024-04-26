@@ -4,3 +4,4 @@ Backenden skal bruge klientens request til at søge dens database efter relavent
 hvorefter den sender det tilbage til klienten.
 Backenden skal også have en liste over forskellige server som klienten kan 
 
+Saves media files as in a media folder with their mediaId as name 
