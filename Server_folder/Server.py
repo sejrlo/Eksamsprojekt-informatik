@@ -1,5 +1,5 @@
 import DatabaseManager as dm
-import Table
+import Table as Table
 import time
 import bcrypt
 import os
@@ -39,7 +39,6 @@ def register(data, context):
 def login(data, context):
     user = Table.get("user", {"username":data["username"]})
     if user == None: return {}, {"request":data["request"], "status":"Username or password incorrect"}
-    print(user.data.keys())
     if bytes.fromhex(user.get("passwordhash")) == bcrypt.hashpw(str.encode(data["password"]), bytes.fromhex(user.get("salt"))):
         response = {"request":data["request"], "status":"success", "username":user.get("username"), "displayname":user.get("displayname"),}
         new_data = {"userid": user.get("id")}
@@ -71,10 +70,16 @@ def get_media(data, context):
         with open(os.path.join(media_path, f"{media.get('id')}.{media.get('datatype')}"), "rb") as f:
             return {}, {"request":data["request"], "status":"success", "data":f.read().hex(), "datatype":media.get("datatype"), "medianame":media.get("medianame")}
     else:
-        return {}, {"request":data["request"], "status":"fail"}
+        return {}, {"request":data["request"], "status":"Failed"}
 
 def del_media(data, context):
     pass
 
 def search(data, context):
-    return {}, {"request":data["request"], "status":"success"}
+    medias = Table.get("media", {"medianame":data["search"]}, filtered=True)
+    ids = [media.get("id") for media in medias] 
+    if ids:
+        return {}, {"request":data["request"], "status":"success", "mediaids":ids}
+    return {}, {"request":data["request"], "status":"No results", "mediaids":None}
+
+
