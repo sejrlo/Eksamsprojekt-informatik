@@ -1,7 +1,8 @@
 import socket
 import json
 
-ip = "127.0.0.1"
+# ip = "127.0.0.1"
+ip = "192.168.1.103"
 
 class Connection:
     def __init__(self, server = ip, port = 5050, header = 64, format = 'utf-8', disconnect = "!DISCONNECT"):
