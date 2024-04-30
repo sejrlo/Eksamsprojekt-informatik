@@ -132,10 +132,7 @@ class SearchFrame(tk.Frame):
             connection.send({'request':'Get_media','id':ans['mediaids'][0]})
             file_ans = connection.receive()
             if file_ans['status'] == 'success':
-                media_path = file_ans[]
-                with open(os.path.join(media_path, f"{media.get('id')}.{media.get('datatype')}"), "wb") as f:
-                    f.write(bytes.fromhex(data["data"]))
-        
+                media_path = file_ans[0]
         
     def log_out(self):
         connection.send({'request':'Logout'})

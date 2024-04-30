@@ -33,6 +33,7 @@ class Connection:
 
     def receive_message(self, conn):
         msg_length = conn.recv(self.HEADER).decode(self.FORMAT)
+        print(msg_length)
         if msg_length: 
             msg_length = int(msg_length)
             msg = conn.recv(msg_length).decode(self.FORMAT)
@@ -50,7 +51,7 @@ class Connection:
             msg = self.receive_message(conn)
             if msg == "": continue
             if msg == self.DISCONNECT_MSG: break
-            
+            print(len(msg))
             data = json.loads(msg)
             print(f"[{addr}] {data['request']}")
             if data["request"] == "Logout":
