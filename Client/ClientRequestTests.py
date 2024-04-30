@@ -58,6 +58,13 @@ print(f"Got media {answer['medianame']}.{answer['datatype']}! ")
 with open(os.path.join(media_path, f"{answer['medianame']}.{answer['datatype']}"), "wb") as f:
         f.write(bytes.fromhex(answer["data"]))
 
+print("Searching for media...")
+message = {"request":"se", "mediaid":test_file_id}
+new_connection.send(message)
+
+print("Receiving answer...")
+answer = new_connection.receive()
+
 print("Logging out...")
 message = {"request":"Logout"}
 new_connection.send(message)
