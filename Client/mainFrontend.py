@@ -200,6 +200,8 @@ class RegisterFrame(tk.Frame):
                 self.window.displayname = answer['displayname']
                 
 
+
+
 def close():
     connection.disconnect()
     app.destroy()
