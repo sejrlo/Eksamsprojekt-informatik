@@ -6,6 +6,7 @@ from PIL import Image, ImageTk
 from Client_socket import Connection
 
 dir = os.path.dirname(__file__)
+media_path = os.path.join(dir, "Client_Media")
 
 
 class App(tk.Tk):
@@ -39,6 +40,8 @@ class App(tk.Tk):
             self.bind_all('<Return>', lambda event: frame_to_raise.verify_login('search'))
         elif frame_key == 'register':
             self.bind_all('<Return>', lambda event: frame_to_raise.register())
+        elif frame_key == 'search':
+            self.bind_all('<Return>', lambda event: frame_to_raise.search_action())
 
                     
 class LoginFrame(tk.Frame):
@@ -106,7 +109,7 @@ class SearchFrame(tk.Frame):
             self.w['search_button'].grid(row=2, column=0, sticky="w")
             
             self.w['search_feedback'] = tk.Label(self, text="")
-            self.w['search_feedback'].grid(row=2, column=1)
+            self.w['search_feedback'].grid(row=3, column=0)
 
             # logout_button = tk.Button(self.search_frame, text="Logout", command=self.switch_to_login)
             # logout_button.grid(row=3, column=0, sticky="ew", columnspan=2)
@@ -124,15 +127,29 @@ class SearchFrame(tk.Frame):
             self.w['display_name_label'] = tk.Label(self, text=self.window.displayname)
     
     def search_action(self):
-        search_query = self.search_widget['instruction'].get()
-        self.search_feedback.config(text=f"Searching for {search_query}")
-        connection.send({'request':'Search','search_query':search_query})
+        search_query = self.w['search_entry'].get()
+        self.w['search_feedback'].config(text=f"Searching for '{search_query}'")
+        connection.send({'request':'Search','search':search_query})
         ans = connection.receive()
+        print(media_path)
         if ans['status'] == 'success':
-            connection.send({'request':'Get_media','id':ans['mediaids'][0]})
+            connection.send({'request':'Get_media','mediaid':ans['mediaids'][0]})
             file_ans = connection.receive()
             if file_ans['status'] == 'success':
+<<<<<<< HEAD
                 media_path = file_ans[0]
+=======
+                with open(os.path.join(media_path, f"{file_ans['medianame']}.{file_ans['datatype']}"), "wb") as f:
+                    f.write(bytes.fromhex(file_ans["data"]))
+                self.w['search_feedback'].config(text=f"1 media downloaded and is ready to view.")
+            else:
+                self.w['search_feedback'].config(text=f"Error in search. Try again later")
+        elif ans['status'] == 'Fail':
+            self.w['search_feedback'].config(text=f"No results found. Try another search query")
+        else:    
+            self.w['search_feedback'].config(text=f"Error in search. Try again later")
+        
+>>>>>>> f1dd663c09657f8e943ba89ce8c2e4a97255cab9
         
     def log_out(self):
         connection.send({'request':'Logout'})

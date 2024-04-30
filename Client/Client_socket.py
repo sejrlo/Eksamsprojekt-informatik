@@ -29,6 +29,7 @@ class Connection:
     def receive(self): 
         msg_length = self.client.recv(self.HEADER).decode(self.FORMAT)
         msg = self.client.recv(int(msg_length)).decode(self.FORMAT)
+        print(msg)
         return json.loads(msg)
 
     def disconnect(self):
