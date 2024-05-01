@@ -8,8 +8,8 @@ email = "test@test.test"
 media_path = os.path.join(os.path.dirname(__file__), "Client_Media")
 
 #test_data = "424DBA000000000000008A0000007C0000000400000004000000010018000000000030000000232E0000232E000000000000000000000000FF0000FF0000FF000000000000004247527300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000FFFFFFFFFFFF000000FFFFFFFFFFFF000000FFFFFFFFFFFF000000FFFFFFFFFFFF000000FFFFFFFFFFFF000000"
-test_file_name = "test"
-test_file_type = "png"
+test_file_name = "1"
+test_file_type = "bmp"
 test_file_description = "en billed test fil"
 test_file_id = 5
 
@@ -64,11 +64,11 @@ print("Searching for media...")
 message = {"request":"Search", "search":test_file_id}
 new_connection.send(message)
 
-print("Receiving answer...")
-answer = new_connection.receive()
+# print("Receiving answer...")
+# answer = new_connection.receive()
 
 print("Logging out...")
-message = {"request":"Logout"}
+
 new_connection.send(message)
 
 print("Receiving answer...")
