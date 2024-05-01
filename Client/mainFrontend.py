@@ -66,8 +66,12 @@ class LoginFrame(tk.Frame):
         self.w['register_button'] = tk.Button(self, text="Register", command=lambda: app.active_frame('register'))
         self.w['register_button'].grid(row=3, column=1)
         
+        self.w['guest_login_button'] = tk.Button(self, text="Guest", command=lambda: app.active_frame('search'))
+        self.w['guest_login_button'].grid(row=4, column=1)
+        
+        
         self.w['feedback_label'] = tk.Label(self, text="")
-        self.w['feedback_label'].grid(row=4, column=0, columnspan=2)
+        self.w['feedback_label'].grid(row=5, column=0, columnspan=2)
         
     def verify_login(self, page_key):
         username = self.w['username_entry_field'].get()
