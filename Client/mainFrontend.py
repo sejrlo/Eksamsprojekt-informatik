@@ -155,6 +155,7 @@ class SearchFrame(tk.Frame):
         connection.send({'request':'Logout'})
         answer = connection.receive()
         app.active_frame('login')
+        self.w['search_feedback'].config(text="")
     
     
 class RegisterFrame(tk.Frame):
