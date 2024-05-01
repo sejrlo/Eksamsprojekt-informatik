@@ -126,13 +126,8 @@ class SearchFrame(tk.Frame):
     def search_action(self):
         search_query = self.search_widget['instruction'].get()
         self.search_feedback.config(text=f"Searching for {search_query}")
-        connection.send({'request':'Search','search_query':search_query})
-        ans = connection.receive()
-        if ans['status'] == 'success':
-            connection.send({'request':'Get_media','id':ans['mediaids'][0]})
-            file_ans = connection.receive()
-            if file_ans['status'] == 'success':
-                media_path = file_ans[0]
+        print(search_query)
+        
         
     def log_out(self):
         connection.send({'request':'Logout'})
@@ -144,8 +139,6 @@ class RegisterFrame(tk.Frame):
     def __init__(self, window):
         super().__init__(window)
         self.w = {}
-        self.window = window
-        
     
     def make_layout(self):
         self.w['email_label'] = tk.Label(self, text="Email:")
@@ -206,8 +199,6 @@ class RegisterFrame(tk.Frame):
                 self.window.username = answer['username']
                 self.window.displayname = answer['displayname']
                 
-
-
 
 def close():
     connection.disconnect()
