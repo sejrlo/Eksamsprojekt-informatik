@@ -47,19 +47,21 @@ answer = new_connection.receive()
 print(f"Answer: {answer}")
 
 print("Creating media...")
-message = {"request":"Get_media", "mediaid":test_file_id}
+message = {"request":"Get_media", "mediaid":test_file_name}
 new_connection.send(message)
 
 print("Receiving answer...")
 answer = new_connection.receive()
+if answer["status"] == "success":
+        print(f"Got media {answer['medianame']}.{answer['datatype']}! ")
+        with open(os.path.join(media_path, f"{answer['medianame']}.{answer['datatype']}"), "wb") as f:
+                f.write(bytes.fromhex(answer["data"]))
+else: 
+        print("failed")
 
-print(f"Got media {answer['medianame']}.{answer['datatype']}! ")
-
-with open(os.path.join(media_path, f"{answer['medianame']}.{answer['datatype']}"), "wb") as f:
-        f.write(bytes.fromhex(answer["data"]))
 
 print("Searching for media...")
-message = {"request":"se", "mediaid":test_file_id}
+message = {"request":"Search", "search":test_file_id}
 new_connection.send(message)
 
 print("Receiving answer...")

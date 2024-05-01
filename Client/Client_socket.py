@@ -1,8 +1,8 @@
 import socket
 import json
 
-# ip = "127.0.0.1"
-ip = "192.168.1.103"
+ip = "127.0.0.1"
+#ip = "192.168.1.103"
 
 class Connection:
     def __init__(self, server = ip, port = 5050, header = 64, format = 'utf-8', disconnect = "!DISCONNECT"):
@@ -29,7 +29,6 @@ class Connection:
     def receive(self): 
         msg_length = self.client.recv(self.HEADER).decode(self.FORMAT)
         msg = self.client.recv(int(msg_length)).decode(self.FORMAT)
-        print(msg)
         return json.loads(msg)
 
     def disconnect(self):
