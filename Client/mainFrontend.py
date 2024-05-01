@@ -131,24 +131,17 @@ class SearchFrame(tk.Frame):
             self.w['display_name_label'] = tk.Label(self, text=self.window.displayname)
     
     def search_action(self):
-        search_query = self.w['search_entry'].get()
-        self.w['search_feedback'].config(text=f"Searching for '{search_query}'")
-        connection.send({'request':'Search','search':search_query})
+        search_query = self.search_widget['instruction'].get()
+        self.search_feedback.config(text=f"Searching for {search_query}")
+        connection.send({'request':'Search','search_query':search_query})
         ans = connection.receive()
-        print(media_path)
         if ans['status'] == 'success':
-            connection.send({'request':'Get_media','mediaid':ans['mediaids'][0]})
+            connection.send({'request':'Get_media','id':ans['mediaids'][0]})
             file_ans = connection.receive()
             if file_ans['status'] == 'success':
-                with open(os.path.join(media_path, f"{file_ans['medianame']}.{file_ans['datatype']}"), "wb") as f:
-                    f.write(bytes.fromhex(file_ans["data"]))
-                self.w['search_feedback'].config(text=f"1 media downloaded and is ready to view.")
-            else:
-                self.w['search_feedback'].config(text=f"Error in search. Try again later")
-        elif ans['status'] == 'Fail':
-            self.w['search_feedback'].config(text=f"No results found. Try another search query")
-        else:    
-            self.w['search_feedback'].config(text=f"Error in search. Try again later")
+                media_path = file_ans[]
+                with open(os.path.join(media_path, f"{media.get('id')}.{media.get('datatype')}"), "wb") as f:
+                    f.write(bytes.fromhex(data["data"]))
         
         
     def log_out(self):
@@ -161,8 +154,6 @@ class RegisterFrame(tk.Frame):
     def __init__(self, window):
         super().__init__(window)
         self.w = {}
-        self.window = window
-        
     
     def make_layout(self):
         self.w['email_label'] = tk.Label(self, text="Email:")
@@ -223,8 +214,6 @@ class RegisterFrame(tk.Frame):
                 self.window.username = answer['username']
                 self.window.displayname = answer['displayname']
                 
-
-
 
 def close():
     connection.disconnect()
