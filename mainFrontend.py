@@ -6,7 +6,6 @@ from PIL import Image, ImageTk
 from Client_socket import Connection
 
 dir = os.path.dirname(__file__)
-media_path = os.path.join(dir, "Client_Media")
 
 
 class App(tk.Tk):
@@ -40,8 +39,6 @@ class App(tk.Tk):
             self.bind_all('<Return>', lambda event: frame_to_raise.verify_login('search'))
         elif frame_key == 'register':
             self.bind_all('<Return>', lambda event: frame_to_raise.register())
-        elif frame_key == 'search':
-            self.bind_all('<Return>', lambda event: frame_to_raise.search_action())
 
                     
 class LoginFrame(tk.Frame):
@@ -109,7 +106,7 @@ class SearchFrame(tk.Frame):
             self.w['search_button'].grid(row=2, column=0, sticky="w")
             
             self.w['search_feedback'] = tk.Label(self, text="")
-            self.w['search_feedback'].grid(row=3, column=0)
+            self.w['search_feedback'].grid(row=2, column=1)
 
             # logout_button = tk.Button(self.search_frame, text="Logout", command=self.switch_to_login)
             # logout_button.grid(row=3, column=0, sticky="ew", columnspan=2)
@@ -135,9 +132,9 @@ class SearchFrame(tk.Frame):
             connection.send({'request':'Get_media','id':ans['mediaids'][0]})
             file_ans = connection.receive()
             if file_ans['status'] == 'success':
-                media_path = file_ans[]
+                
                 with open(os.path.join(media_path, f"{media.get('id')}.{media.get('datatype')}"), "wb") as f:
-                    f.write(bytes.fromhex(data["data"]))
+                    f.write(bytes.fromhex(file_ans["data"]))
         
         
     def log_out(self):
@@ -150,6 +147,8 @@ class RegisterFrame(tk.Frame):
     def __init__(self, window):
         super().__init__(window)
         self.w = {}
+        self.window = window
+        
     
     def make_layout(self):
         self.w['email_label'] = tk.Label(self, text="Email:")
@@ -210,6 +209,8 @@ class RegisterFrame(tk.Frame):
                 self.window.username = answer['username']
                 self.window.displayname = answer['displayname']
                 
+
+
 
 def close():
     connection.disconnect()
